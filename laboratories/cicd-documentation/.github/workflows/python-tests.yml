@@ -1,19 +1,33 @@
-name: 🚀 Run
+name: 🧪 Run unit-tests
 
+# ─────────────── DECLANȘĂRI ───────────────
 on:
-  workflow_dispatch:
+  push:              
+    branches: [ "main" ]
+  pull_request:     
+    branches: [ "main" ]
+  workflow_dispatch:  
 
 jobs:
-  run:
-    name: 🚀 Run
+  tests:
     runs-on: ubuntu-latest
     steps:
-      - name: 📥 Checkout
-        uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
 
-      - name: 🚀 Run
-        shell: bash
+      - name: 📥 Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0          
+
+      - name: 🐍 Set-up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: 📦 Install deps
         run: |
-          python3 main.py
+          python -m pip install --upgrade pip
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+
+      - name: 🧪 Run unit tests
+        run: |
+          python -m unittest -v test_find.py
