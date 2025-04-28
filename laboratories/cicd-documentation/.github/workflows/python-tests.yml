@@ -1,28 +1,19 @@
-name: CI – run unit tests
+name: 🚀 Run
 
 on:
-  push:
-    branches: [ "main" ]
+  workflow_dispatch:
 
 jobs:
-  test:
+  run:
+    name: 🚀 Run
     runs-on: ubuntu-latest
-
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
+      - name: 📥 Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
 
-    - name: Set up Python
-      uses: actions/setup-python@v5
-      with:
-        python-version: "3.11"
-
-    - name: Install dependencies
-      run: |
-        python -m pip install --upgrade pip
-        pip install -r requirements.txt  || true
-        pip install pytest
-
-    - name: Run unit tests
-      run: |
-        pytest -q
+      - name: 🚀 Run
+        shell: bash
+        run: |
+          python3 main.py
