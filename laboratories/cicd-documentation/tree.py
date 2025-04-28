@@ -67,6 +67,7 @@ class Tree:
     def printTree(self):
         if self.root is not None:
             self._printInorderTree(self.root)
+            self._printPreorderTree(self.root)
 
     def _printInorderTree(self, node):
         if node is not None:
@@ -75,11 +76,15 @@ class Tree:
             self._printInorderTree(node.right)
 
     def _printPreorderTree(self, node):
-        # TODO
-        pass
+        if node is not None:
+            print(str(node.data) + ' ')
+            self._printPreorderTree(node.left)
+            self._printPreorderTree(node.right)
 
     def _printPostorderTree(self, node):
-        # TODO
-        pass
+        if node is not None:
+            self._printPostorderTree(node.left)
+            self._printPostorderTree(node.right)
+            print(str(node.data) + ' ')
 
 
