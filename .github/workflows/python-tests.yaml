@@ -1,0 +1,35 @@
+name: 🧪 unit-tests
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: 📥 Checkout repository
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+
+    - name: 🐍 Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: "3.11"
+      working-directory: systems-testing/laboratories/cicd-documentation
+
+    - name: 📦 Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+      working-directory: systems-testing/laboratories/cicd-documentation
+
+    - name: 🧪 Run unit tests (test_find.py)
+      run: |
+        python -m unittest -v test_find.py
+      working-directory: systems-testing/laboratories/cicd-documentation
